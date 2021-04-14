@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Sodoku Game</title>
+
+<link rel="stylesheet"
+	th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<a class="navbar-brand" href="#">sonpc.ga</a>
+	</nav>
+
+	<main role="main" class="container">
+
+		<div class="starter-template">
+			<h1>Sodoku Game</h1>
+			<h2>
+				<span th:text="'Hello, ' + ${message}"></span>
+			</h2>
+			<form action="#" th:action="@{/solve}" th:object="${sodukuDto}"
+				method="post">
+				<table class="center"
+					style="border: 3px solid black; width: 400px; height: 400px;">
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{a8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{b8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr class="border-bottom1">
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1"><input type="text" maxlength="1"
+							class="input-text form-control" th:field="*{c2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1"><input type="text" maxlength="1"
+							class="input-text form-control" th:field="*{c5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{c8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{d8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{e8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr class="border-bottom1">
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1"><input type="text" maxlength="1"
+							class="input-text form-control" th:field="*{f2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1"><input type="text" maxlength="1"
+							class="input-text form-control" th:field="*{f5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right"><input type="text"
+							class="input-text form-control" maxlength="1" th:field="*{f8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{g8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{h8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+
+					<tr>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i0}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i1}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i2}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i3}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i4}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="border-right1 td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i5}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i6}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i7}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+						<td class="td-right td-bottom"><input type="text"
+							maxlength="1" class="input-text form-control" th:field="*{i8}"
+							autocomplete="off" onkeypress="return onlyNumberKey(event)" /></td>
+					</tr>
+				</table>
+				<button type="submit" class="btn btn-success"
+					style="margin-top: 10px">Solve</button>
+				<button type="reset" class="btn btn-success"
+					style="margin-top: 10px">Clear</button>
+			</form>
+
+		</div>
+
+	</main>
+	<!-- /.container -->
+
+	<script type="text/javascript"
+		th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+	<script>
+	    function onlyNumberKey(evt) {
+	          
+	        // Only ASCII charactar in that range allowed
+	        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+	        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+	            return false;
+	        return true;
+	    }
+	</script>
+</body>
+</html>
